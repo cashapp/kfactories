@@ -1,0 +1,8 @@
+buildscript {
+  ext.versions = [
+    'kotlin': '1.5.10',
+  ]
+  ext.deps = [
+    'kotlinGradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+  ]
+}
