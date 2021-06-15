@@ -34,3 +34,6 @@ fun <T> IntRange.gen(generator: () -> T): Collection<T> {
   val count = newInt(first, last)
   return (1..count).map { generator() }
 }
+
+// testing whether or not the github actions are creating duplicates
+fun foo() = "bar updated"
