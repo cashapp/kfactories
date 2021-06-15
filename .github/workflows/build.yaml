@@ -1,6 +1,10 @@
 name: build
 
 on:
+  # Necessary when pull requests are updated.
+  push: {}
+
+  # Necessary when pull requests are opened / closed.
   pull_request:
     paths-ignore:
       - '*.md'
