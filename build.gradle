@@ -1,83 +1,73 @@
 buildscript {
-  apply from: 'dependencies.gradle'
+    apply from: 'dependencies.gradle'
 
-  dependencies {
-    classpath deps.kotlinGradlePlugin
-    classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
-    classpath 'com.diffplug.spotless:spotless-plugin-gradle:5.1.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.14.2'
-    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.32'
-    classpath 'de.undercouch:gradle-download-task:4.1.1'
-  }
+    dependencies {
+        classpath deps.kotlinGradlePlugin
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
+        classpath 'com.diffplug.spotless:spotless-plugin-gradle:5.1.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.14.2'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.32'
+        classpath 'de.undercouch:gradle-download-task:4.1.1'
+    }
 
-  repositories {
-    mavenCentral()
-    gradlePluginPortal()
-  }
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
 }
 
 plugins {
-  id 'org.jetbrains.kotlin.jvm' version "1.5.10"
+    id 'org.jetbrains.kotlin.jvm' version "1.8.10"
+    id 'com.vanniktech.maven.publish' version "0.25.3"
 }
 
 dependencies {
-  compileOnly gradleApi()
-  compileOnly deps.kotlinGradlePlugin
+    compileOnly gradleApi()
+    compileOnly deps.kotlinGradlePlugin
 
-  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0'
 
-  testImplementation 'org.assertj:assertj-core:3.19.0'
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0-M1'
-  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
-  testImplementation 'org.junit.platform:junit-platform-gradle-plugin:1.2.0'
-  testImplementation 'org.jetbrains.kotlin:kotlin-test:1.4.32'
+    testImplementation 'org.assertj:assertj-core:3.19.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
+    testImplementation 'org.junit.platform:junit-platform-gradle-plugin:1.2.0'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test:1.4.32'
 }
 
 repositories {
-  mavenCentral()
-  google()
+    mavenCentral()
+    google()
 }
 
 test {
-  useJUnitPlatform()
+    useJUnitPlatform()
 
-  testLogging {
-    if (System.getenv("CI") == "true") {
-      events = ["failed", "skipped", "passed"]
+    testLogging {
+        if (System.getenv("CI") == "true") {
+            events = ["failed", "skipped", "passed"]
+        }
+        exceptionFormat "full"
     }
-    exceptionFormat "full"
-  }
 }
 
-apply plugin: 'com.vanniktech.maven.publish'
+import com.vanniktech.maven.publish.SonatypeHost
 
-mavenPublish {
-  targets {
-    installArchives {
-      def url = file("${rootProject.buildDir}/localMaven").toURI().toString()
-      releaseRepositoryUrl = url
-      snapshotRepositoryUrl = url
-    }
-  }
-}
-
-signing {
-  def signingKey = findProperty('signingKey')
-  def signingPassword = ''
-  useInMemoryPgpKeys(signingKey, signingPassword)
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.DEFAULT, true)
+    signAllPublications()
 }
 
 apply plugin: 'com.diffplug.spotless'
 
 spotless {
-  kotlin {
-    target('**/*.kt')
-    licenseHeaderFile(rootProject.file('gradle/license-header.txt'))
-    // Spotless doesn't read .editorconfig yet: https://github.com/diffplug/spotless/issues/142
-    ktlint('0.41.0').userData([
-      'insert_final_newline': 'true',
-      'end_of_line': 'lf',
-      'indent_size': '2',
-    ])
-  }
+    kotlin {
+        target('**/*.kt')
+        licenseHeaderFile(rootProject.file('gradle/license-header.txt'))
+        // Spotless doesn't read .editorconfig yet: https://github.com/diffplug/spotless/issues/142
+        ktlint('0.41.0').userData([
+                'insert_final_newline': 'true',
+                'end_of_line'         : 'lf',
+                'indent_size'         : '2',
+        ])
+    }
 }
