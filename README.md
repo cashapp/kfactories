@@ -1,10 +1,10 @@
 # kfactories
 
 Set of factories and utils to run an
-effective [smart monkey](https://en.wikipedia.org/wiki/Monkey_testing#Smart_monkey_tests)
-and [property-based testing](https://www.infoq.com/presentations/property-based-testing/) strategy.
+effective and [property-based testing](https://www.infoq.com/presentations/property-based-testing/)
+strategy.
 
-In short, monkeys have a strong understanding of the different entities and their multiple states to
+In short, factories have a strong understanding of the different entities and their multiple states to
 generate them. By rotating all values, they focus on ensuring your system is robust to valid and
 known state changes and behaves as expected.
 
@@ -26,7 +26,7 @@ As such, tests are not thoroughly covering edge cases. Resources can also be nes
 customer can have cards and addresses, each of which has its own set of assumptions.
 
 How do you write tests that enable you to verify there isn't a bug in your codebase, given all these
-different states? That's where smart monkeys and property-based testing come to the rescue. They
+different states? That's where smart factories and property-based testing come to the rescue. They
 know the valid state for each resource, and they can set all of this for you.
 
 If an assumption changes (for instance: a first name was previously required and no longer is), by
