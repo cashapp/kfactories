@@ -1,4 +1,6 @@
 # kfactories
+[![build](https://github.com/cashapp/kfactories/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/cashapp/kfactories/actions/workflows/build.yaml) 
+[![Maven Central](https://img.shields.io/maven-central/v/app.cash.kfactories/kfactories)](https://mvnrepository.com/artifact/app.cash.kfactories/kfactories)
 
 Set of factories and utils to run an
 effective and [property-based testing](https://www.infoq.com/presentations/property-based-testing/)
@@ -12,6 +14,14 @@ For instance: a customer can have a first name, last name, email address, and ph
 least one of these fields is required. As you run the tests, you will always get a unique
 combination that represents a valid customer. For example, the first run might have all customer
 fields set. Another run might only have the email.
+
+## Installation
+If you are using Gradle, simply add the dependency:
+```
+testImplementation("app.cash.kfactories:kfactories:1.0.0")
+```
+
+For other installations, see instructions on [maven][1].
 
 ## Motivations
 
@@ -217,3 +227,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+[1]:https://mvnrepository.com/artifact/app.cash.kfactories/kfactories/1.0.0
